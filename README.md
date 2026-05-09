@@ -36,9 +36,6 @@ The widget fully supports English, Arabic with automatic right-to-left layout sw
 Admin Panel
 The admin panel gives Smart Complain staff a platform-wide view of all registered businesses, their subscription plans, and account statuses. It shows all complaints submitted across every business on the system. Admins can suspend or reactivate businesses, view detailed business information, and view or manage any complaint on the platform. Platform-level analytics show aggregate numbers across all accounts.
 
-How to Run Locally
-No build tools, package managers, or servers are required for the current version. Download or clone the files into a single folder and open index.html in a browser to see the login portal. Open widget-demo.html to see the widget embedded on the sample TechStore site. For the widget to work without browser security warnings about local files, start a simple local HTTP server from the project folder using Python or any equivalent tool, then open the served address in your browser.
-
 Future Roadmap
 Phase 1 — Spring Boot Backend and PostgreSQL
 The first major phase replaces the localStorage demo with a production backend. The chosen framework is Spring Boot using Java, which is a mature and widely adopted choice for building REST APIs at scale. The database will be PostgreSQL, a reliable open-source relational database well suited for complex queries and concurrent traffic.
@@ -72,9 +69,3 @@ For large businesses, the risks around complaints are more severe. A missed high
 Technology Stack
 The current frontend uses HTML5 for structure, CSS3 with custom properties, flexbox, grid, and animations for styling, and vanilla JavaScript with no external libraries for all interactivity. The Inter typeface is used throughout for clean typography.
 The planned production stack uses Spring Boot 3 with Java 21 for the backend API, Spring Security with JWT for authentication, PostgreSQL 16 as the primary database, Spring Data JPA with Hibernate for database access, Redis for caching, AWS S3 for file storage, RabbitMQ for asynchronous job processing, a large language model API for AI features, a content delivery network for widget distribution, Docker and Kubernetes for containerisation and orchestration, GitHub Actions for continuous integration and deployment, and Grafana with Prometheus for monitoring and alerting.
-
-Contributing
-Contributions are welcome. The most useful areas right now are the Spring Boot backend implementation following the roadmap architecture, additional widget language translations beyond the current four, chart components for the analytics view, accessibility improvements, and automated test coverage for both frontend logic and the planned API. Fork the repository, work in a descriptively named branch, write clear commit messages, and open a pull request with a summary of what was changed and why.
----
-License
-This project is released under the MIT License. The full license text is in the LICENSE file in the repository root.
