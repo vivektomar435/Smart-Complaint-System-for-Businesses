@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Complain — Admin Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+:root {
+    --nav-bg: #1E3A8A;
+    --page-bg: #F0F4FF;
+    --surface: #FFFFFF;
+    --surface-2: #F8FAFF;
+    --border: #E2E8F0;
+    --text-primary: #0F172A;
+    --text-secondary: #475569;
+    --text-muted: #94A3B8;
+    --accent: #1E3A8A;
+    --accent-hover: #1e40af;
+    --success: #10B981;
+    --danger: #EF4444;
+    --warning: #F59E0B;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+    --shadow-md: 0 4px 16px rgba(0,0,0,0.08);
+    --radius: 10px;
+    --transition: 0.2s ease;
+}
+[data-theme="dark"] {
+    --page-bg: #0B1120;
+    --surface: #141C2E;
+    --surface-2: #1A2540;
+    --border: #273554;
+    --text-primary: #E2E8F0;
+    --text-secondary: #94A3B8;
+    --text-muted: #4B5B7A;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.3);
+    --shadow-md: 0 4px 16px rgba(0,0,0,0.4);
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--page-bg);
+    color: var(--text-primary);
+    transition: background var(--transition), color var(--transition);
+    min-height: 100vh;
+}
+
+/* ── Navbar ── */
+.navbar {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    background: var(--nav-bg);
+    padding: 0 1.5rem;
+    height: 60px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+.navbar-brand { font-size: 1.1rem; font-weight: 700; color: #fff; letter-spacing: -0.3px; white-space: nowrap; }
+.navbar-brand span { opacity: 0.55; font-weight: 400; font-size: 0.85rem; margin-left: 0.5rem; }
+.navbar-right { display: flex; align-items: center; gap: 0.75rem; margin-left: auto; }
+.dark-mode-btn {
+    background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+    color: #fff; width: 34px; height: 34px; border-radius: 50%; cursor: pointer;
+    font-size: 1rem; display: flex; align-items: center; justify-content: center;
+    transition: all var(--transition);
+}
+.dark-mode-btn:hover { background: rgba(255,255,255,0.2); }
+.logout-btn {
+    background: transparent; border: 1px solid rgba(255,255,255,0.4); color: #fff;
+    padding: 0.35rem 0.9rem; border-radius: 6px; cursor: pointer;
+    font-size: 0.82rem; font-weight: 500; transition: all var(--transition);
+}
+.logout-btn:hover { background: rgba(255,255,255,0.15); }
+
+/* ── Content ── */
+.admin-content { padding: 2rem; max-width: 900px; margin: 0 auto; }
+.page-header { margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 1rem; }
+.page-header h1 { font-size: 1.6rem; font-weight: 700; color: var(--text-primary); }
+.page-header p { color: var(--text-secondary); font-size: 0.9rem; margin-top: 0.25rem; }
+.session-badge {
+    background: #D1FAE5; color: #065F46;
+    padding: 0.3rem 0.9rem; border-radius: 999px;
+    font-size: 0.8rem; font-weight: 600;
+    display: inline-flex; align-items: center; gap: 0.4rem;
+}
+
+/* ── Admin Cards ── */
+.admin-sections { display: flex; flex-direction: column; gap: 1.25rem; }
+.admin-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 1.5rem; box-shadow: var(--shadow-sm);
+    transition: box-shadow 0.2s ease;
+}
+.admin-card:hover { box-shadow: var(--shadow-md); }
+.admin-card-header { display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 1.25rem; }
+.admin-icon {
+    font-size: 1.4rem; flex-shrink: 0;
+    width: 42px; height: 42px;
+    background: var(--surface-2); border: 1px solid var(--border);
+    border-radius: 10px; display: flex; align-items: center; justify-content: center;
+}
+.admin-card-header h3 { font-size: 1rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.2rem; }
+.admin-card-header p { font-size: 0.82rem; color: var(--text-secondary); }
+.admin-badge {
+    margin-left: auto; flex-shrink: 0; padding: 0.25rem 0.7rem;
+    border-radius: 999px; font-size: 0.72rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.4px;
+}
+.admin-badge-danger { background: #FEE2E2; color: #991B1B; }
+.admin-badge-warn   { background: #FEF3C7; color: #92400E; }
+
+/* ── Form Controls ── */
+.api-key-row { display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap; }
+.api-key-input {
+    flex: 1; min-width: 220px; padding: 0.55rem 1rem;
+    border: 1px solid var(--border); border-radius: 7px;
+    font-family: 'JetBrains Mono', monospace; font-size: 0.85rem;
+    background: var(--surface-2); color: var(--text-primary); outline: none;
+    transition: border-color var(--transition);
+}
+.api-key-input:focus { border-color: var(--accent); }
+.btn-copy, .btn-regen {
+    padding: 0.5rem 1rem; border-radius: 7px; font-size: 0.82rem;
+    font-weight: 600; cursor: pointer; transition: all var(--transition);
+    font-family: 'DM Sans', sans-serif; white-space: nowrap;
+}
+.btn-copy { background: var(--accent); color: white; border: none; }
+.btn-copy:hover { background: var(--accent-hover); }
+.btn-regen { background: var(--surface-2); color: var(--text-secondary); border: 1px solid var(--border); }
+.btn-regen:hover { background: var(--border); }
+.btn-save {
+    background: var(--success); color: white; border: none;
+    padding: 0.5rem 1.2rem; border-radius: 7px; font-size: 0.875rem;
+    font-weight: 600; cursor: pointer; font-family: 'DM Sans', sans-serif;
+    transition: opacity var(--transition);
+}
+.btn-save:hover { opacity: 0.88; }
+
+.key-warning { margin-top: 0.75rem; font-size: 0.8rem; color: #92400E; background: #FEF3C7; padding: 0.5rem 0.75rem; border-radius: 6px; }
+[data-theme="dark"] .key-warning { background: #2d1e00; color: #fbbf24; }
+
+.setting-row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 0.65rem 0; color: var(--text-secondary); font-size: 0.875rem;
+    border-bottom: 1px solid var(--border);
+}
+.setting-row:last-of-type { border-bottom: none; }
+
+.switch { position: relative; display: inline-block; width: 44px; height: 24px; }
+.switch input { opacity: 0; width: 0; height: 0; }
+.slider { position: absolute; cursor: pointer; inset: 0; background: #ccc; transition: .3s; border-radius: 24px; }
+.slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px; background: white; transition: .3s; border-radius: 50%; }
+input:checked + .slider { background: var(--success); }
+input:checked + .slider:before { transform: translateX(20px); }
+
+.filter-group { display: flex; flex-direction: column; gap: 0.35rem; }
+.filter-group label { font-size: 0.78rem; font-weight: 600; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.4px; }
+.filter-group input {
+    padding: 0.5rem 0.9rem; border: 1px solid var(--border); border-radius: 7px;
+    font-size: 0.875rem; background: var(--surface-2); color: var(--text-primary);
+    font-family: 'DM Sans', sans-serif; outline: none; transition: border-color var(--transition);
+}
+.filter-group input:focus { border-color: var(--accent); }
+
+#admin-key-status {
+    display: none; font-size: 0.82rem; padding: 0.5rem 0.75rem;
+    border-radius: 6px; margin-top: 0.5rem;
+}
+
+/* ── Toast ── */
+#admin-toast {
+    position: fixed; bottom: 24px; left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: #059669; color: white;
+    padding: 12px 24px; border-radius: 8px;
+    font-size: 14px; font-weight: 500;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    transition: transform 0.3s ease;
+    z-index: 99999;
+}
+    </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar">
+    <div class="navbar-brand">⚡ smart complain <span>/ Admin Portal</span></div>
+    <div class="navbar-right">
+        <button class="dark-mode-btn" onclick="toggleDark()" id="dark-btn">🌙</button>
+        <button class="logout-btn" onclick="window.location.href='index.html'">← Back to Login</button>
+    </div>
+</nav>
+
+<main class="admin-content">
+
+    <div class="page-header">
+        <div>
+            <h1>🔐 Admin Portal</h1>
+            <p>Security-sensitive configuration — restricted access</p>
+        </div>
+        <span class="session-badge">● Session Active</span>
+    </div>
+
+    <div class="admin-sections">
+
+        <!-- Groq AI Key -->
+        <div class="admin-card">
+            <div class="admin-card-header">
+                <span class="admin-icon">🤖</span>
+                <div>
+                    <h3>Groq AI API Key</h3>
+                    <p>Powers AI auto-classification and analytics insights (llama3-70b-8192)</p>
+                </div>
+                <span class="admin-badge admin-badge-danger">Sensitive</span>
+            </div>
+            <div class="api-key-row" style="margin-bottom:0.75rem;">
+                <input type="password" id="groq-api-key" class="api-key-input" placeholder="gsk_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx">
+                <button class="btn-copy" onclick="saveGroqKey()">Save Key</button>
+                <button class="btn-regen" onclick="toggleGroqKeyVis()">Show</button>
+            </div>
+            <div id="admin-key-status"></div>
+            <div class="setting-row" style="margin-top:0.5rem;">
+                <span>Enable AI auto-classification for incoming complaints</span>
+                <label class="switch"><input type="checkbox" id="groq-enabled" checked><span class="slider"></span></label>
+            </div>
+            <div class="setting-row">
+                <span>Show AI reasoning on complaint cards</span>
+                <label class="switch"><input type="checkbox" id="groq-show-reasoning"><span class="slider"></span></label>
+            </div>
+            <p style="margin-top:0.75rem;font-size:0.8rem;color:var(--text-muted);">
+                Model: <code style="background:var(--surface-2);padding:2px 6px;border-radius:4px;">llama3-70b-8192</code>
+                · Get key at <a href="https://console.groq.com" target="_blank" style="color:var(--accent);">console.groq.com</a>
+            </p>
+        </div>
+
+        <!-- Business API Key -->
+        <div class="admin-card">
+            <div class="admin-card-header">
+                <span class="admin-icon">🗝️</span>
+                <div>
+                    <h3>Business API Key</h3>
+                    <p>Used by the widget and external integrations to submit complaints</p>
+                </div>
+                <span class="admin-badge admin-badge-danger">Sensitive</span>
+            </div>
+            <div class="api-key-row">
+                <input type="text" id="api-key-display" value="sc_live_xK9mP2qR7nL4wJ8vT6hC" readonly class="api-key-input">
+                <button class="btn-copy" onclick="copyApiKey()">Copy</button>
+                <button class="btn-regen" onclick="regenApiKey()">Regenerate</button>
+            </div>
+            <p class="key-warning" style="margin-top:0.75rem;">⚠ Regenerating will invalidate the current key — all widgets must be updated.</p>
+            <div class="setting-row" style="margin-top:0.75rem;">
+                <span>Accept new complaints via widget</span>
+                <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+            </div>
+            <div class="setting-row">
+                <span>Allow status query by customers</span>
+                <label class="switch"><input type="checkbox"><span class="slider"></span></label>
+            </div>
+        </div>
+
+        <!-- Webhook Configuration -->
+        <div class="admin-card">
+            <div class="admin-card-header">
+                <span class="admin-icon">🔗</span>
+                <div>
+                    <h3>Webhook Configuration</h3>
+                    <p>Receive real-time event notifications to your server</p>
+                </div>
+                <span class="admin-badge admin-badge-warn">Config</span>
+            </div>
+            <div class="api-key-row" style="margin-bottom:1rem;">
+                <input type="url" id="webhook-url" placeholder="https://yourbusiness.com/api/webhooks/complaints" class="api-key-input" style="font-family:'DM Sans',sans-serif;">
+                <button class="btn-save" onclick="saveWebhook()">Save</button>
+            </div>
+            <div class="setting-row">
+                <span>complaint.created</span>
+                <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+            </div>
+            <div class="setting-row">
+                <span>complaint.resolved</span>
+                <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+            </div>
+            <div class="setting-row">
+                <span>complaint.escalated</span>
+                <label class="switch"><input type="checkbox"><span class="slider"></span></label>
+            </div>
+        </div>
+
+        <!-- Security & Permissions -->
+        <div class="admin-card">
+            <div class="admin-card-header">
+                <span class="admin-icon">🛡️</span>
+                <div>
+                    <h3>Security & Permissions</h3>
+                    <p>Control what actions are permitted via API and widget</p>
+                </div>
+                <span class="admin-badge admin-badge-warn">Security</span>
+            </div>
+            <div class="setting-row">
+                <span>Require email verification on widget submissions</span>
+                <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+            </div>
+            <div class="setting-row">
+                <span>Rate-limit widget: max 5 complaints/IP per hour</span>
+                <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+            </div>
+            <div class="setting-row">
+                <span>Block duplicate complaints (same title within 24h)</span>
+                <label class="switch"><input type="checkbox"><span class="slider"></span></label>
+            </div>
+            <div class="setting-row">
+                <span>Enable CORS for widget on all domains</span>
+                <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+            </div>
+            <div class="setting-row">
+                <span>Allow public complaint status lookup by ID</span>
+                <label class="switch"><input type="checkbox"><span class="slider"></span></label>
+            </div>
+        </div>
+
+        <!-- Admin Credentials -->
+        <div class="admin-card">
+            <div class="admin-card-header">
+                <span class="admin-icon">👤</span>
+                <div>
+                    <h3>Admin Credentials</h3>
+                    <p>Change admin email and password for this portal</p>
+                </div>
+                <span class="admin-badge admin-badge-danger">Sensitive</span>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem;">
+                <div class="filter-group">
+                    <label>Admin Email</label>
+                    <input type="email" value="admin@example.com">
+                </div>
+                <div class="filter-group">
+                    <label>New Password</label>
+                    <input type="password" placeholder="Enter new password">
+                </div>
+            </div>
+            <button class="btn-copy" onclick="showToast('✓ Admin credentials updated.','#059669')" style="padding:0.55rem 1.25rem;">Save Credentials</button>
+        </div>
+
+        <!-- Danger Zone -->
+        <div class="admin-card" style="border-color:#FCA5A5;">
+            <div class="admin-card-header">
+                <span class="admin-icon">⚠️</span>
+                <div>
+                    <h3 style="color:#DC2626;">Danger Zone</h3>
+                    <p>Irreversible actions — proceed with caution</p>
+                </div>
+                <span class="admin-badge admin-badge-danger">Danger</span>
+            </div>
+            <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-top:0.5rem;">
+                <button onclick="if(confirm('Reset API key? All widgets will stop working until updated.')){regenApiKey();showToast('⚠ API key reset. Update all widgets.','#DC2626');}"
+                    style="background:#FEE2E2;color:#991B1B;border:1px solid #FCA5A5;padding:0.55rem 1.1rem;border-radius:7px;cursor:pointer;font-size:0.875rem;font-weight:600;font-family:'DM Sans',sans-serif;">
+                    🔄 Force Reset API Key
+                </button>
+                <button onclick="window.location.href='index.html'"
+                    style="background:#FEE2E2;color:#991B1B;border:1px solid #FCA5A5;padding:0.55rem 1.1rem;border-radius:7px;cursor:pointer;font-size:0.875rem;font-weight:600;font-family:'DM Sans',sans-serif;">
+                    🚪 Logout
+                </button>
+            </div>
+        </div>
+
+    </div>
+</main>
+
+<div id="admin-toast"></div>
+
+<script>
+// ── Dark mode ──
+function toggleDark() {
+    const html = document.documentElement;
+    const isDark = html.getAttribute('data-theme') === 'dark';
+    html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+    document.getElementById('dark-btn').textContent = isDark ? '🌙' : '☀️';
+    localStorage.setItem('sc_admin_theme', isDark ? 'light' : 'dark');
+}
+(function initTheme() {
+    const saved = localStorage.getItem('sc_admin_theme') || 'light';
+    document.documentElement.setAttribute('data-theme', saved);
+    document.getElementById('dark-btn').textContent = saved === 'dark' ? '☀️' : '🌙';
+})();
+
+// ── Restore Groq key ──
+(function restoreKey() {
+    const k = sessionStorage.getItem('sc_groq_key');
+    if (k) document.getElementById('groq-api-key').value = k;
+})();
+
+// ── Toast ──
+let toastTimer = null;
+function showToast(msg, bg = '#059669') {
+    const t = document.getElementById('admin-toast');
+    t.textContent = msg;
+    t.style.background = bg;
+    setTimeout(() => t.style.transform = 'translateX(-50%) translateY(0)', 10);
+    if (toastTimer) clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => { t.style.transform = 'translateX(-50%) translateY(100px)'; }, 3500);
+}
+
+// ── Groq Key ──
+function saveGroqKey() {
+    const input  = document.getElementById('groq-api-key');
+    const status = document.getElementById('admin-key-status');
+    const key    = input.value.trim();
+    if (!key) { showStatus(status, '⚠ Enter a key first.', 'warn'); return; }
+    if (!key.startsWith('gsk_')) { showStatus(status, '⚠ Groq keys start with "gsk_". Check console.groq.com', 'warn'); return; }
+    sessionStorage.setItem('sc_groq_key', key);
+    showStatus(status, '✓ Key saved. AI classification is now active.', 'ok');
+}
+function showStatus(el, msg, type) {
+    el.textContent = msg;
+    el.style.display = 'block';
+    el.style.background = type === 'ok' ? '#D1FAE5' : '#FEF3C7';
+    el.style.color       = type === 'ok' ? '#065F46' : '#92400E';
+    setTimeout(() => el.style.display = 'none', 4000);
+}
+function toggleGroqKeyVis() {
+    const input = document.getElementById('groq-api-key');
+    const btn   = document.querySelector('.btn-regen');
+    if (input.type === 'password') { input.type = 'text'; btn.textContent = 'Hide'; }
+    else                           { input.type = 'password'; btn.textContent = 'Show'; }
+}
+
+// ── Business API Key ──
+function copyApiKey() {
+    const val = document.getElementById('api-key-display').value;
+    navigator.clipboard.writeText(val);
+    showToast('API key copied!', '#059669');
+}
+function regenApiKey() {
+    if (!confirm('Regenerating will invalidate the existing key. Continue?')) return;
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let k = 'sc_live_';
+    for (let i = 0; i < 20; i++) k += chars[Math.floor(Math.random() * chars.length)];
+    document.getElementById('api-key-display').value = k;
+    showToast('⚠ API key regenerated. Update all widgets.', '#DC2626');
+}
+
+// ── Webhook ──
+function saveWebhook() {
+    const url = document.getElementById('webhook-url').value.trim();
+    if (!url) { alert('Enter a webhook URL.'); return; }
+    try { new URL(url); } catch { alert('Invalid URL.'); return; }
+    showToast('Webhook saved! A test ping will be sent.', '#059669');
+}
+</script>
+
+</body>
+</html>

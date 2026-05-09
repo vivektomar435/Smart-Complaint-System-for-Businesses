@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Portal</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        
+        <!-- View 1: Main Role Selection -->
+        <div id="view-role-selection" class="view active">
+            <h2>Welcome</h2>
+            <p class="subtitle">Please select your role to continue</p>
+            <div class="action-buttons">
+                <button class="btn btn-primary" onclick="showView('view-business-selection')">Business Owner</button>
+                <button class="btn btn-secondary" onclick="showView('view-admin-login')">Admin</button>
+            </div>
+        </div>
+
+        <!-- View 2: Admin Login -->
+        <div id="view-admin-login" class="view">
+            <button class="btn-back" onclick="showView('view-role-selection')">&larr; Back</button>
+            <h2>Admin Login</h2>
+            <p class="subtitle">Enter your admin credentials</p>
+            <form onsubmit="handleFormSubmit(event, 'Admin Login Successful!', 'admin.html')">
+                <div class="form-group">
+                    <label for="admin-email">Email</label>
+                    <input type="email" id="admin-email" required placeholder="admin@example.com">
+                </div>
+                <div class="form-group">
+                    <label for="admin-password">Password</label>
+                    <input type="password" id="admin-password" required placeholder="••••••••">
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Login</button>
+            </form>
+        </div>
+
+        <!-- View 3: Business Owner Selection -->
+        <div id="view-business-selection" class="view">
+            <button class="btn-back" onclick="showView('view-role-selection')">&larr; Back</button>
+            <h2>Business Owner</h2>
+            <p class="subtitle">Are you a new or existing user?</p>
+            <div class="action-buttons">
+                <button class="btn btn-primary" onclick="showView('view-business-register')">Register your business</button>
+                <button class="btn btn-secondary" onclick="showView('view-business-login')">Existing user</button>
+            </div>
+        </div>
+
+        <!-- View 4: Business Owner Login -->
+        <div id="view-business-login" class="view">
+            <button class="btn-back" onclick="showView('view-business-selection')">&larr; Back</button>
+            <h2>Business Login</h2>
+            <p class="subtitle">Welcome back, please login</p>
+            <form onsubmit="handleFormSubmit(event, 'Business Login Successful!')">
+                <div class="form-group">
+                    <label for="biz-login-email">Email</label>
+                    <input type="email" id="biz-login-email" required placeholder="owner@business.com">
+                </div>
+                <div class="form-group">
+                    <label for="biz-login-password">Password</label>
+                    <input type="password" id="biz-login-password" required placeholder="••••••••">
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Login</button>
+            </form>
+        </div>
+
+        <!-- View 5: Business Registration Form -->
+        <div id="view-business-register" class="view">
+            <button class="btn-back" onclick="showView('view-business-selection')">&larr; Back</button>
+            <h2>Register Your Business</h2>
+            <p class="subtitle">Fill out the details below to get started</p>
+            <form onsubmit="handleFormSubmit(event, 'Business Registration Successful!', 'dashboard.html')">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="reg-biz-name">Business Name</label>
+                        <input type="text" id="reg-biz-name" required placeholder="Company Inc.">
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-owner-name">Owner Name</label>
+                        <input type="text" id="reg-owner-name" required placeholder="John Doe">
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-email">Email</label>
+                        <input type="email" id="reg-email" required placeholder="john@company.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-password">Password</label>
+                        <input type="password" id="reg-password" required placeholder="••••••••">
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-industry">Industry Type</label>
+                        <select id="reg-industry" required>
+                            <option value="" disabled selected>Select an industry</option>
+                            <option value="retail">Retail</option>
+                            <option value="technology">Technology</option>
+                            <option value="healthcare">Healthcare</option>
+                            <option value="finance">Finance</option>
+                            <option value="education">Education</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-complain">Estimated Complain</label>
+                        <input type="number" id="reg-complain" placeholder="e.g. 50">
+                    </div>
+                    <div class="form-group full-width">
+                        <label for="reg-phone">Phone Number</label>
+                        <input type="tel" id="reg-phone" required placeholder="+1 (555) 000-0000">
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block" style="margin-top: 1rem;">Register</button>
+            </form>
+        </div>
+
+    </div>
+
+    <!-- Toast Notification for demo purposes -->
+    <div id="toast" class="toast">Action Successful</div>
+
+    <script src="script.js"></script>
+</body>
+</html>

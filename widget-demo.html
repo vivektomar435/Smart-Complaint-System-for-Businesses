@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechStore — Example Business Site</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            background: #F9FAFB;
+            color: #111827;
+            min-height: 100vh;
+        }
+
+        /* Fake business navbar */
+        .biz-nav {
+            background: #111827;
+            color: white;
+            padding: 0 2rem;
+            height: 56px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .biz-nav-brand { font-weight: 700; font-size: 1.1rem; letter-spacing: -0.3px; }
+        .biz-nav-links { display: flex; gap: 1.5rem; list-style: none; }
+        .biz-nav-links a { color: #9CA3AF; text-decoration: none; font-size: 0.9rem; transition: color 0.2s; }
+        .biz-nav-links a:hover { color: white; }
+
+        /* Hero section */
+        .hero {
+            background: linear-gradient(135deg, #1E3A8A 0%, #3B82F6 100%);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+        .hero h1 { font-size: 2rem; margin-bottom: 0.75rem; font-weight: 700; }
+        .hero p { font-size: 1rem; opacity: 0.85; max-width: 480px; margin: 0 auto 1.5rem; }
+        .hero-btn {
+            display: inline-block;
+            background: white;
+            color: #1E3A8A;
+            padding: 0.75rem 2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            font-size: 0.95rem;
+        }
+
+        /* Product grid */
+        .section { padding: 2.5rem 2rem; max-width: 960px; margin: 0 auto; }
+        .section h2 { font-size: 1.25rem; margin-bottom: 1.25rem; font-weight: 600; color: #111827; }
+        .products {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 1rem;
+        }
+        .product-card {
+            background: white;
+            border: 1px solid #E5E7EB;
+            border-radius: 10px;
+            padding: 1.25rem 1rem;
+            text-align: center;
+            transition: box-shadow 0.2s;
+        }
+        .product-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+        .product-emoji { font-size: 2.25rem; margin-bottom: 0.5rem; }
+        .product-name { font-size: 0.9rem; font-weight: 600; color: #111827; margin-bottom: 0.25rem; }
+        .product-price { font-size: 0.85rem; color: #6B7280; }
+        .product-btn {
+            margin-top: 0.75rem;
+            background: #1E3A8A;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 0.4rem 1rem;
+            font-size: 0.8rem;
+            font-weight: 500;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        /* Support notice */
+        .support-notice {
+            background: #EFF6FF;
+            border: 1px solid #BFDBFE;
+            border-radius: 10px;
+            padding: 1.25rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin: 0 2rem 2rem;
+            max-width: 920px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .support-notice-icon { font-size: 1.75rem; flex-shrink: 0; }
+        .support-notice h3 { font-size: 0.95rem; font-weight: 600; color: #1E40AF; margin-bottom: 0.2rem; }
+        .support-notice p { font-size: 0.85rem; color: #3B82F6; }
+
+        /* Footer */
+        .biz-footer {
+            background: #111827;
+            color: #6B7280;
+            text-align: center;
+            padding: 1.5rem;
+            font-size: 0.8rem;
+            margin-top: 2rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Fake business site nav -->
+    <nav class="biz-nav">
+        <div class="biz-nav-brand">⚡ TechStore</div>
+        <ul class="biz-nav-links">
+            <li><a href="#">Products</a></li>
+            <li><a href="#">Deals</a></li>
+            <li><a href="#">Support</a></li>
+            <li><a href="#">Account</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero -->
+    <div class="hero">
+        <h1>The best tech, delivered fast</h1>
+        <p>Shop thousands of electronics with free 2-day shipping and easy returns.</p>
+        <a href="#" class="hero-btn">Shop Now</a>
+    </div>
+
+    <!-- Support notice -->
+    <div class="section" style="padding-bottom:0;">
+        <div class="support-notice">
+            <div class="support-notice-icon">💬</div>
+            <div>
+                <h3>Having an issue? We're here to help.</h3>
+                <p>Click the <strong>"Report an Issue"</strong> button in the bottom-right corner to submit a complaint. We'll respond within 24 hours.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Products -->
+    <div class="section">
+        <h2>Featured Products</h2>
+        <div class="products">
+            <div class="product-card">
+                <div class="product-emoji">💻</div>
+                <div class="product-name">UltraBook Pro 14</div>
+                <div class="product-price">₹1,08,999</div>
+                <button class="product-btn">Add to Cart</button>
+            </div>
+            <div class="product-card">
+                <div class="product-emoji">📱</div>
+                <div class="product-name">NovaPad X12</div>
+                <div class="product-price">₹54,999</div>
+                <button class="product-btn">Add to Cart</button>
+            </div>
+            <div class="product-card">
+                <div class="product-emoji">🎧</div>
+                <div class="product-name">SoundArc Pro</div>
+                <div class="product-price">₹24,999</div>
+                <button class="product-btn">Add to Cart</button>
+            </div>
+            <div class="product-card">
+                <div class="product-emoji">⌚</div>
+                <div class="product-name">FitWatch Ultra</div>
+                <div class="product-price">₹33,499</div>
+                <button class="product-btn">Add to Cart</button>
+            </div>
+            <div class="product-card">
+                <div class="product-emoji">🖥️</div>
+                <div class="product-name">VisionDesk 27"</div>
+                <div class="product-price">₹45,999</div>
+                <button class="product-btn">Add to Cart</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="biz-footer">
+        © 2026 TechStore Inc. · Privacy · Terms · <span style="color:#3B82F6;">Complaint portal powered by Smart Complain</span>
+    </footer>
+
+    <!--
+      ╔═══════════════════════════════════════════════════════╗
+      ║  SMART COMPLAIN WIDGET — paste this before </body>   ║
+      ╚═══════════════════════════════════════════════════════╝
+    -->
+    <script
+        src="widget.js"
+        data-api-key="sc_live_xK9mP2qR7nL4wJ8vT6hC"
+        data-label="Report an Issue"
+        data-color="#1E3A8A"
+        data-position="bottom-right"
+        data-lang="en">
+    </script>
+
+</body>
+</html>
