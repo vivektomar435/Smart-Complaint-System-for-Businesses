@@ -56,6 +56,6 @@ Large businesses reduce legal and reputational risk through audit trails, escala
 Technology Stack
 The current frontend uses HTML5, CSS3, and vanilla JavaScript with no external libraries.
 The planned backend uses Spring Boot 3 with Java 21, Spring Security with JWT, PostgreSQL 16, Spring Data JPA with Hibernate, Redis for caching, AWS S3 for file storage, RabbitMQ for async jobs, a large language model API for AI features, a content delivery network for widget distribution, Docker and Kubernetes for deployment, GitHub Actions for CI/CD, and Grafana with Prometheus for monitoring.
----
+
 Contributing
 Useful contribution areas are the Spring Boot backend implementation, additional widget languages, analytics chart components, accessibility improvements, and test coverage. Fork the repository, work in a named branch, and open a pull request with a clear description of the changes.
